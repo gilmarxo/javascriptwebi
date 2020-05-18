@@ -1,42 +1,26 @@
-var tbody = document.querySelector('tbody');
-var tfoot = document.querySelector('tfoot');
-var lista = JSON.parse(localStorage.getItem('listas'));
+document.querySelector('.form').addEventListener('submit', function(event){
+    event.preventDefault();
+    inserirTrasacao();
+})
 
-function renderTabela() {
+function inserirTrasacao(){
+    var data = document.getElementById("data");
+    var quantidade = document.getElementById("quantidade");
+    var valor = document.getElementById("valor");
 
-    for (row in lista) {
+    console.log(valor);
 
-        var tr = document.createElement('tr');
+    var total = quantidade.value * valor.value;
 
-        var volume = lista[row].valor * lista[row].quantidade;
+    var tr = document.createElement('tr');
 
-        var tQuant = lista[row].quantidade + tQuant;
-        var tValor = lista[row].valor + tValor;
-        var tVolume = volume + tVolume;
+    tr.innerHTML = `
+    <td>${data.value}</td>
+    <td>${quantidade.value}</td>
+    <td>${valor.value}</td>
+    <td>${total}</td>
+    `;
 
-        tr.innerHTML = `<td>${lista[row].data}</td>
-                        <td>${lista[row].quantidade}</td>
-                        <td>${lista[row].valor}</td>
-                        <td>${volume}</td>`
-        tbody.appendChild(tr);
-    }
-}
+    document.getElementsByTagName("table")[0].appendChild(tr);
 
-renderTabela();
-
-function addTable() {
-    var dt = document.getElementById('data').value
-    var qt = parseInt(document.getElementById('quantidade').value)
-    var vl = parseFloat(document.getElementById('valor').value)
-
-    lista.push({ data: dt, quantidade: qt, valor: vl })
-
-    saveStorage();
-    renderTabela();
-
-}
-
-
-function saveStorage() {
-    localStorage.setItem('listas', JSON.stringify(lista))
 }
